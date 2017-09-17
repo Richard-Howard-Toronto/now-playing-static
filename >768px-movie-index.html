@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Now Playing Responsive</title>
+
+	   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Source+Sans+Pro">
+    <link rel="stylesheet" href="css/movie-styles-over-768.css">
+
+    <script src="https://use.fontawesome.com/427c01bf2d.js" charset="utf-8"></script>
+
+<style>
+/* BASE styles */
+
+html {
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  color: #333333;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+
+  /*
+    We need to add some padding to the bottom of the body on mobile so that
+     the footer won't get covered by our navigation
+  */
+  padding-bottom: 60px;
+}
+
+/*
+  This rule ensure that all images always fit in their container
+   but are never stretched beyond their native resolution
+*/
+img {
+  max-width: 100%;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* CLEARFIX - for ensuring floated elements are contained in their parent */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* NAVIGATION styles */
+.site-logo {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 100px;       /*NEW*/
+  height: 100px;
+  margin: 0;
+  z-index: +1;
+}
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 6rem;  /*NEW*/
+  z-index: 100;
+  background-color: #ffffff;
+
+}
+
+
+.site-nav-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.footer-nav-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.site-nav-item {
+  /*float: left;*/  /*GONE*/
+  width: 20%;
+  height: 60px;
+  padding: 0.75em;
+  font-family: "Montserrat", "Source Code Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.6em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.site-nav-item > .fa {
+  font-size: 1.75rem;
+}
+
+/*NEW PARTS!*/
+
+.site-nav-item:hover {
+  background-color: #333333;
+  color: #ffffff;
+  width: 60px;  /*NEW*/
+  cursor: pointer;
+  text-align: left;
+}
+
+.site-nav-item-label {
+  display: block;
+  margin-top: 0.5em;
+}
+
+
+/* MOVIE styles */
+.movie {
+  position: relative;
+}
+
+.movie-poster,
+.movie-backdrop {
+  display: block;
+}
+
+/*
+  Hide the poster on mobile devices, only show backdrop
+  TIP: Use media queries to reveal it on larger devices
+*/
+.movie-poster {
+  display: none;
+}
+
+.movie-details {
+  position: absolute;
+  margin-left: 100px;  /*NEW!*/
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 1em;
+  color: #ffffff;
+
+  /*
+    Linear gradients are a bit of an advanced CSS3 feature.
+      As seen below you specify the linear-gradient as a value for
+      the `background-image` property. It creates a gradient with as many stops
+      as you care to define. To learn more about how it works, read this article
+      and the related docs: https://medium.com/@patrickbrosset/do-you-really-understand-css-linear-gradients-631d9a895caf#.6yl8vdmiv
+  */
+
+  background-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/*
+  Hide the overview on mobile devices
+  TIP: Use media queries to reveal it on larger devices
+*/
+.movie-overview {
+  /*display: none; zeroed out*/
+  width: 50%
+}
+
+.movie-title-label {
+  font-family: "Montserrat", "Source Code Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.7em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: gold;
+  margin: 0;
+}
+
+.movie-title {
+  margin: 0;
+  font-size: 2em;
+  line-height: 1.1;
+}
+
+
+/* FOOTER styles */
+
+.site-footer {
+  text-align: center;
+  float: right;
+  width: 90%;
+  margin: 20px;
+  background-color: black;
+
+
+}
+
+/*to make the footer nav and the above float side by side*/
+
+.footer-nav {
+  display: inline-block;
+  padding: 1em;
+  width: 45%;   /*<----*/
+  margin-bottom: 20px;
+  color: #ffffff;
+
+}
+
+.about {          /*<----*/
+  margin-top: 10px;
+  display: inline-block;
+  width: 45%;
+
+}
+
+.about {
+  text-align: center;
+  background-color: none;
+  color: #ffffff;
+  padding: 1em;
+}
+
+.footer-nav-item {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+/*
+  The :last-child pseudo-selector lets you select only the last element
+    within a containing element.   WATCHLIST
+
+    Similarly, there's a :first-child pseudo-selector
+    to select the first child of a containing element.
+*/
+.footer-nav-item:last-child {
+  margin-right: 0;
+}
+
+
+.about > p {
+  margin: 0;
+}
+
+
+
+/*Once the device (or browser window) is wider than 768px,
+
+the navigation bar should move to be fixed to the left side of the window,
+the logo should be within the sidebar rather than floating on its own,
+the film overviews should be visible, and
+the footer sections should be side by side rather than stacked, with a black background and white text. */
+
+
+
+</style>
+
+
+
+
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1 class="site-logo"><img src="images/logo.svg" alt="Bitmaker Responsive Movie DB" class="site-logo-image"></h1>
+      <nav class="site-nav">
+        <ul class="site-nav-list">
+          <li class="site-nav-item">
+            <i class="fa fa-video-camera"></i>
+            <span class="site-nav-item-label">Movies</span>
+          </li>
+          <li class="site-nav-item">
+            <i class="fa fa-television"></i>
+            <span class="site-nav-item-label">TV Series</span>
+          </li>
+          <li class="site-nav-item">
+            <i class="fa fa-ticket"></i>
+            <span class="site-nav-item-label">Events</span>
+          </li>
+          <li class="site-nav-item">
+            <i class="fa fa-film"></i>
+            <span class="site-nav-item-label">Trailers</span>
+          </li>
+          <li class="site-nav-item">
+            <i class="fa fa-bookmark"></i>
+            <span class="site-nav-item-label">Watchlist</span>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <article class="movie">
+      <figure class="movie-image">
+          <img class="movie-poster" alt="Doctor Strange" src="http://image.tmdb.org/t/p/w780/xfWac8MTYDxujaxgPVcRD9yZaul.jpg" />
+          <img class="movie-backdrop" alt="Doctor Strange" src="http://image.tmdb.org/t/p/w1280/tFI8VLMgSTTU38i8TIsklfqS9Nl.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Doctor Strange</h1>
+          <p class="movie-overview">After his career is destroyed, a brilliant but arrogant surgeon gets a new lease on life when a sorcerer takes him under his wing and trains him to defend the world against evil.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Mad Max: Fury Road" src="http://image.tmdb.org/t/p/w780/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" />
+          <img class="movie-backdrop" alt="Mad Max: Fury Road" src="http://image.tmdb.org/t/p/w1280/tbhdm8UJAb4ViCTsulYFL3lxMCd.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Mad Max: Fury Road</h1>
+          <p class="movie-overview">An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There&#39;s Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Arrival" src="http://image.tmdb.org/t/p/w780/4Iu5f2nv7huqvuYkmZvSPOtbFjs.jpg" />
+          <img class="movie-backdrop" alt="Arrival" src="http://image.tmdb.org/t/p/w1280/wFFlaVHmQG4U43m0l3eQqHZluvn.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Arrival</h1>
+          <p class="movie-overview">Taking place after alien crafts land around the world, an expert linguist is recruited by the military to determine whether they come in peace or are a threat.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Suicide Squad" src="http://image.tmdb.org/t/p/w780/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg" />
+          <img class="movie-backdrop" alt="Suicide Squad" src="http://image.tmdb.org/t/p/w1280/ndlQ2Cuc3cjTL7lTynw6I4boP4S.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Suicide Squad</h1>
+          <p class="movie-overview">From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="The Secret Life of Pets" src="http://image.tmdb.org/t/p/w780/WLQN5aiQG8wc9SeKwixW7pAR8K.jpg" />
+          <img class="movie-backdrop" alt="The Secret Life of Pets" src="http://image.tmdb.org/t/p/w1280/lubzBMQLLmG88CLQ4F3TxZr2Q7N.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">The Secret Life of Pets</h1>
+          <p class="movie-overview">The quiet life of a terrier named Max is upended when his owner takes in Duke, a stray whom Max instantly dislikes.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Jack Reacher: Never Go Back" src="http://image.tmdb.org/t/p/w780/IfB9hy4JH1eH6HEfIgIGORXi5h.jpg" />
+          <img class="movie-backdrop" alt="Jack Reacher: Never Go Back" src="http://image.tmdb.org/t/p/w1280/4ynQYtSEuU5hyipcGkfD6ncwtwz.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Jack Reacher: Never Go Back</h1>
+          <p class="movie-overview">Jack Reacher must uncover the truth behind a major government conspiracy in order to clear his name. On the run as a fugitive from the law, Reacher uncovers a potential secret from his past that could change his life forever.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Mechanic: Resurrection" src="http://image.tmdb.org/t/p/w780/tgfRDJs5PFW20Aoh1orEzuxW8cN.jpg" />
+          <img class="movie-backdrop" alt="Mechanic: Resurrection" src="http://image.tmdb.org/t/p/w1280/6kMu4vECAyTpj2Z7n8viJ4RAaYh.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Mechanic: Resurrection</h1>
+          <p class="movie-overview">Arthur Bishop thought he had put his murderous past behind him when his most formidable foe kidnaps the love of his life. Now he is forced to travel the globe to complete three impossible assassinations, and do what he does best, make them look like accidents.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Finding Dory" src="http://image.tmdb.org/t/p/w780/z09QAf8WbZncbitewNk6lKYMZsh.jpg" />
+          <img class="movie-backdrop" alt="Finding Dory" src="http://image.tmdb.org/t/p/w1280/iWRKYHTFlsrxQtfQqFOQyceL83P.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Finding Dory</h1>
+          <p class="movie-overview">&quot;Finding Dory&quot; reunites Dory with friends Nemo and Marlin on a search for answers about her past. What can she remember? Who are her parents? And where did she learn to speak Whale?</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Jurassic World" src="http://image.tmdb.org/t/p/w780/jjBgi2r5cRt36xF6iNUEhzscEcb.jpg" />
+          <img class="movie-backdrop" alt="Jurassic World" src="http://image.tmdb.org/t/p/w1280/dkMD5qlogeRMiEixC4YNPUvax2T.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Jurassic World</h1>
+          <p class="movie-overview">Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Captain America: Civil War" src="http://image.tmdb.org/t/p/w780/5N20rQURev5CNDcMjHVUZhpoCNC.jpg" />
+          <img class="movie-backdrop" alt="Captain America: Civil War" src="http://image.tmdb.org/t/p/w1280/m5O3SZvQ6EgD5XXXLPIP1wLppeW.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Captain America: Civil War</h1>
+          <p class="movie-overview">Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="The Last Starship" src="http://image.tmdb.org/t/p/w780/jZASQ15M6KUaRvHJhbUButeATDi.jpg" />
+          <img class="movie-backdrop" alt="The Last Starship" src="http://placehold.it/1280x720/?text=Backdrop not available" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">The Last Starship</h1>
+          <p class="movie-overview">Conflict and tension looms heavily across the broken remains of a distant, post-apocalyptic world. Controlled by a race of oppressive genetically-enhanced humans, the last natural-born humans have no choice but to bow down to their rule. The only alternative is to wander the vast wastelands surrounding the last habitable city, whilst relentlessly hunted by roaming pack of mutated monsters. Meanwhile, outside the towering walls of the citadel, aboard a massive hulking army tank, an uprising occurs amongst the natural-born crew. Their hope lies in the legend of the Republic of EZO: said to return aboard the last starship....</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Interstellar" src="http://image.tmdb.org/t/p/w780/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg" />
+          <img class="movie-backdrop" alt="Interstellar" src="http://image.tmdb.org/t/p/w1280/xu9zaAevzQ5nnrsXN6JcahLnG4i.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Interstellar</h1>
+          <p class="movie-overview">Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Terminator Genisys" src="http://image.tmdb.org/t/p/w780/5JU9ytZJyR3zmClGmVm9q4Geqbd.jpg" />
+          <img class="movie-backdrop" alt="Terminator Genisys" src="http://image.tmdb.org/t/p/w1280/bIlYH4l2AyYvEysmS2AOfjO7Dn8.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Terminator Genisys</h1>
+          <p class="movie-overview">The year is 2029. John Connor, leader of the resistance continues the war against the machines. At the Los Angeles offensive, John&#39;s fears of the unknown future begin to emerge when TECOM spies reveal a new plot by SkyNet that will attack him from both fronts; past and future, and will ultimately change warfare forever.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="X-Men: Apocalypse" src="http://image.tmdb.org/t/p/w780/zSouWWrySXshPCT4t3UKCQGayyo.jpg" />
+          <img class="movie-backdrop" alt="X-Men: Apocalypse" src="http://image.tmdb.org/t/p/w1280/oQWWth5AOtbWG9o8SCAviGcADed.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">X-Men: Apocalypse</h1>
+          <p class="movie-overview">After the re-emergence of the world&#39;s first mutant, world-destroyer Apocalypse, the X-Men must unite to defeat his extinction level plan.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Fantastic Beasts and Where to Find Them" src="http://image.tmdb.org/t/p/w780/9HE9xiNMEFJnCzndlkWD7oPfAOx.jpg" />
+          <img class="movie-backdrop" alt="Fantastic Beasts and Where to Find Them" src="http://image.tmdb.org/t/p/w1280/6I2tPx6KIiBB4TWFiWwNUzrbxUn.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Fantastic Beasts and Where to Find Them</h1>
+          <p class="movie-overview">In 1926, Newt Scamander arrives at the Magical Congress of the United States of America with a magically expanded briefcase, which houses a number of dangerous creatures and their habitats. When the creatures escape from the briefcase, it sends the American wizarding authorities after Newt, and threatens to strain even further the state of magical and non-magical relations.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Inferno" src="http://image.tmdb.org/t/p/w780/oFOG2yIRcluKfTtYbzz71Vj9bgz.jpg" />
+          <img class="movie-backdrop" alt="Inferno" src="http://image.tmdb.org/t/p/w1280/anmLLbDx9d98NMZRyVUtxwJR6ab.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Inferno</h1>
+          <p class="movie-overview">After waking up in a hospital with amnesia, professor Robert Langdon and a doctor must race against time to foil a deadly global plot.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="The Legend of Tarzan" src="http://image.tmdb.org/t/p/w780/6FxOPJ9Ysilpq0IgkrMJ7PubFhq.jpg" />
+          <img class="movie-backdrop" alt="The Legend of Tarzan" src="http://image.tmdb.org/t/p/w1280/uC8RkYALi9VWHeZQWLRUqjxfW09.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">The Legend of Tarzan</h1>
+          <p class="movie-overview">Tarzan, having acclimated to life in London, is called back to his former home in the jungle to investigate the activities at a mining encampment.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Ice Age: Collision Course" src="http://image.tmdb.org/t/p/w780/dN3KkgXcDkP1QkOZPz5EGXzS8B7.jpg" />
+          <img class="movie-backdrop" alt="Ice Age: Collision Course" src="http://image.tmdb.org/t/p/w1280/o29BFNqgXOUT1yHNYusnITsH7P9.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Ice Age: Collision Course</h1>
+          <p class="movie-overview">Set after the events of Continental Drift, Scrat&#39;s epic pursuit of his elusive acorn catapults him outside of Earth, where he accidentally sets off a series of cosmic events that transform and threaten the planet. To save themselves from peril, Manny, Sid, Diego, and the rest of the herd leave their home and embark on a quest full of thrills and spills, highs and lows, laughter and adventure while traveling to exotic new lands and encountering a host of colorful new characters.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="Star Trek Beyond" src="http://image.tmdb.org/t/p/w780/mLrQMqyZgLeP8FrT5LCobKAiqmK.jpg" />
+          <img class="movie-backdrop" alt="Star Trek Beyond" src="http://image.tmdb.org/t/p/w1280/6uBlEXZCUHM15UNZqNig17VdN4m.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">Star Trek Beyond</h1>
+          <p class="movie-overview">The USS Enterprise crew explores the furthest reaches of uncharted space, where they encounter a mysterious new enemy who puts them and everything the Federation stands for to the test.</p>
+        </div>
+      </article>
+
+      <article class="movie">
+        <figure class="movie-image">
+          <img class="movie-poster" alt="The Hunger Games: Mockingjay - Part 1" src="http://image.tmdb.org/t/p/w780/gj282Pniaa78ZJfbaixyLXnXEDI.jpg" />
+          <img class="movie-backdrop" alt="The Hunger Games: Mockingjay - Part 1" src="http://image.tmdb.org/t/p/w1280/83nHcz2KcnEpPXY50Ky2VldewJJ.jpg" />
+        </figure>
+        <div class="movie-details">
+          <h2 class="movie-title-label">Movie</h2>
+          <h1 class="movie-title">The Hunger Games: Mockingjay - Part 1</h1>
+          <p class="movie-overview">Katniss Everdeen reluctantly becomes the symbol of a mass rebellion against the autocratic Capitol.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <nav class="footer-nav">
+        <ul class="footer-nav-list">
+          <li class="footer-nav-item">
+            <span class="footer-nav-item-label">Movies</span>
+          </li>
+          <li class="footer-nav-item">
+            <span class="footer-nav-item-label">TV Series</span>
+          </li>
+          <li class="footer-nav-item">
+            <span class="footer-nav-item-label">Events</span>
+          </li>
+          <li class="footer-nav-item">
+            <span class="footer-nav-item-label">Trailers</span>
+          </li>
+          <li class="footer-nav-item">
+            <span class="footer-nav-item-label">Watchlist</span>
+          </li>
+        </ul>
+      </nav>
+
+      <section class="about">
+        <p>Site by: <strong>Richard Howard</strong></p>
+        <p><small>A Bitmaker assignment &copy; Sept 2017</small></p>
+      </section>
+    </footer>
+  </body>
+</html>
